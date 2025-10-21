@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Career Conversation Space - Virtual AI Interview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Default to light mode variables */
+            --bg-color: #f4f4f4;
+            --section-bg: #ffffff;
+            --text-color: #333;
+            --accent-color: #007bff; /* Blue for links/headings */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --footer-text: #777;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1e1e1e;
+                --section-bg: #2c2c2c;
+                --text-color: #e0e0e0;
+                --accent-color: #4da6ff; /* Lighter blue for dark mode */
+                --shadow-color: rgba(0, 0, 0, 0.5);
+                --footer-text: #a0a0a0;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f4f4f4;
+                --section-bg: #ffffff;
+                --text-color: #333;
+                --accent-color: #007bff;
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --footer-text: #777;
+            }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--section-bg);
+            padding: 30px 20px; /* Reduced for tighter spacing */
+            text-align: center;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        .headshot {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px; /* Reduced for efficiency */
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0 0 5px; /* Added small bottom margin */
+            color: var(--accent-color);
+        }
+        p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto 5px; /* Reduced bottom margin */
+        }
+        .embed-section {
+            margin: 20px 0; /* Reduced top/bottom margin for less gap */
+            padding: 20px; /* Even padding around the section */
+            text-align: center;
+        }
+        .embed-section h2 {
+            margin: 0 0 10px; /* Reduced space below h2 */
+        }
+        gradio-app {
+            width: 90% !important; /* Stretches to majority of screen */
+            max-width: 1200px !important; /* Caps for very large screens */
+            height: 450px; /* Adjust height as needed */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            display: block !important;
+            margin: 0 auto !important; /* Forces centering */
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--section-bg);
+            font-size: 0.9em;
+            color: var(--footer-text);
+            box-shadow: 0 -2px 4px var(--shadow-color);
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .embed-section {
+                padding: 10px; /* Slightly reduced on mobile */
+            }
+            gradio-app {
+                width: 100% !important; /* Full width on mobile */
+                height: 300px; /* Adjust for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://immich.tailc9630c.ts.net/api/assets/f47549c1-13c0-4da4-b10f-51e25b6d520b/thumbnail?size=preview&key=rpNR2rUipZBnFH729i4sLT-QhEHa3PkST0GG7SyiB0u_0cQLeMD-irFDthY5Fl2G97A&c=DggKDgIWnKOIdwiYZ4Z4h3mHBnhmoDc%3D" alt="Your Headshot" class="headshot">
+        <h1>Welcome to my career conversation space</h1>
+        <p>Ask me anything about my career in this virtual interview powered by AI. Engage in insightful discussions about my resume, experiences, and more.</p>
+    </header>
+
+    <section class="embed-section"> <!-- No .container for full-width stretching -->
+        <h2>Try the Chat App Below</h2>
+        <script
+            type="module"
+            src="https://gradio.s3-us-west-2.amazonaws.com/5.34.2/gradio.js"
+        ></script>
+        <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
+    </section>
+</body>
+</html>
