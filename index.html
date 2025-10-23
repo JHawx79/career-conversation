@@ -15,7 +15,6 @@
             --shadow-color: rgba(0, 0, 0, 0.1);
             --footer-text: #777;
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #1e1e1e;
@@ -26,7 +25,6 @@
                 --footer-text: #a0a0a0;
             }
         }
-
         @media (prefers-color-scheme: light) {
             :root {
                 --bg-color: #f4f4f4;
@@ -37,7 +35,6 @@
                 --footer-text: #777;
             }
         }
-
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -45,6 +42,9 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
+            display: flex; /* Use flexbox to allow sections to expand */
+            flex-direction: column; /* Stack vertically */
+            min-height: 100vh; /* Ensure body fills full viewport height */
         }
         .container {
             max-width: 1200px;
@@ -76,17 +76,21 @@
             margin: 0 auto 5px; /* Reduced bottom margin */
         }
         .embed-section {
-            margin: 20px 0; /* Reduced top/bottom margin for less gap */
-            padding: 20px; /* Even padding around the section */
+            margin: 0; /* CHANGED: Remove top/bottom margin to reduce gaps */
+            padding: 10px; /* CHANGED: Reduced padding for tighter layout */
             text-align: center;
+            flex: 1; /* Allows this section to expand and fill remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* CHANGED: Push content to the top, no centering */
         }
         .embed-section h2 {
             margin: 0 0 10px; /* Reduced space below h2 */
         }
         gradio-app {
-            width: 90% !important; /* Stretches to majority of screen */
-            max-width: 1200px !important; /* Caps for very large screens */
-            height: 450px; /* Adjust height as needed */
+            width: 100% !important; /* Full width stretch */
+            height: 100% !important; /* CHANGED: Fill the full height of the parent section */
+            min-height: 400px; /* Minimum height to prevent squishing */
             border-radius: 8px;
             box-shadow: 0 4px 8px var(--shadow-color);
             display: block !important;
@@ -94,22 +98,23 @@
         }
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 10px; /* CHANGED: Reduced padding for less space */
             background-color: var(--section-bg);
             font-size: 0.9em;
             color: var(--footer-text);
             box-shadow: 0 -2px 4px var(--shadow-color);
+            margin-top: auto; /* NEW: Pushes footer to the bottom if there's extra space */
         }
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
             }
             .embed-section {
-                padding: 10px; /* Slightly reduced on mobile */
+                padding: 5px; /* Further reduced on mobile */
             }
             gradio-app {
                 width: 100% !important; /* Full width on mobile */
-                height: 300px; /* Adjust for smaller screens */
+                min-height: 300px;
             }
         }
     </style>
@@ -120,7 +125,6 @@
         <h1>Welcome to my career conversation space</h1>
         <p>Ask me anything about my career in this virtual interview powered by AI. Engage in insightful discussions about my resume, experiences, and more.</p>
     </header>
-
     <section class="embed-section"> <!-- No .container for full-width stretching -->
         <h2>Try the Chat App Below</h2>
         <script
@@ -129,5 +133,8 @@
         ></script>
         <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
     </section>
+    <footer>
+        &copy; 2023 Your Name. All rights reserved.
+    </footer>
 </body>
 </html>
