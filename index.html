@@ -1,140 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>My Career Conversation Space - Virtual AI Interview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-            /* Default to light mode variables */
-            --bg-color: #f4f4f4;
-            --section-bg: #ffffff;
-            --text-color: #333;
-            --accent-color: #007bff; /* Blue for links/headings */
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --footer-text: #777;
+        --bg-color: #f4f4f4;
+        --section-bg: #ffffff;
+        --text-color: #333;
+        --accent-color: #007bff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --footer-text: #777;
         }
         @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #1e1e1e;
-                --section-bg: #2c2c2c;
-                --text-color: #e0e0e0;
-                --accent-color: #4da6ff; /* Lighter blue for dark mode */
-                --shadow-color: rgba(0, 0, 0, 0.5);
-                --footer-text: #a0a0a0;
-            }
+        :root {
+        --bg-color: #1e1e1e;
+        --section-bg: #2c2c2c;
+        --text-color: #e0e0e0;
+        --accent-color: #4da6ff;
+        --shadow-color: rgba(0, 0, 0, 0.5);
+        --footer-text: #a0a0a0;
         }
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-color: #f4f4f4;
-                --section-bg: #ffffff;
-                --text-color: #333;
-                --accent-color: #007bff;
-                --shadow-color: rgba(0, 0, 0, 0.1);
-                --footer-text: #777;
-            }
         }
+
+        /* Base layout */
+        html, body { height: 100%; }
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex; /* Use flexbox to allow sections to expand */
-            flex-direction: column; /* Stack vertically */
-            min-height: 100vh; /* Ensure body fills full viewport height */
+        margin: 0;
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+
+        /* Page uses the dynamic viewport height so mobile toolbars don't steal space */
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+
+        /* Center the whole site and cap its width */
+        .page {
+        max-width: 1920px;
+        width: 100%;
+        margin-inline: auto;
+        min-height: 100dvh;          /* ensure a definite height to divide */
+        display: flex;
+        flex-direction: column;      /* header | content | footer */
         }
+
         header {
-            background-color: var(--section-bg);
-            padding: 30px 20px; /* Reduced for tighter spacing */
-            text-align: center;
-            box-shadow: 0 2px 4px var(--shadow-color);
+        background-color: var(--section-bg);
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 2px 4px var(--shadow-color);
         }
         .headshot {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px; /* Reduced for efficiency */
-            box-shadow: 0 4px 8px var(--shadow-color);
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 8px var(--shadow-color);
         }
         h1 {
-            font-size: 2.5em;
-            margin: 0 0 5px; /* Added small bottom margin */
-            color: var(--accent-color);
+        font-size: 2.5em;
+        margin: 0 0 5px;
+        color: var(--accent-color);
         }
         p {
-            font-size: 1.2em;
-            max-width: 800px;
-            margin: 0 auto 5px; /* Reduced bottom margin */
+        font-size: 1.2em;
+        max-width: 800px;
+        margin: 0 auto 5px;
         }
+
+        /* Middle section fills the remaining height */
         .embed-section {
-            margin: 0; /* CHANGED: Remove top/bottom margin to reduce gaps */
-            padding: 10px; /* CHANGED: Reduced padding for tighter layout */
-            text-align: center;
-            flex: 1; /* Allows this section to expand and fill remaining space */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* CHANGED: Push content to the top, no centering */
+        padding: 10px 10px 0;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;   /* take all leftover vertical space */
+        min-height: 0;    /* IMPORTANT for flex children to be allowed to grow */
+        background: transparent;
         }
         .embed-section h2 {
-            margin: 0 0 10px; /* Reduced space below h2 */
+        margin: 0 0 10px;
+        text-align: center;
         }
+
+        /* Wrapper that lets the chat expand to fill height and stay centered */
+        .embed-inner {
+        flex: 1 1 auto;          /* the row that grows */
+        min-height: 0;           /* allow child to size beyond content min */
+        display: flex;
+        align-items: stretch;    /* child gets full height */
+        justify-content: center; /* horizontally center gradio */
+        }
+
+        /* Gradio fills all available height and width of the centered area */
         gradio-app {
-            width: 100% !important; /* Full width stretch */
-            height: 100% !important; /* CHANGED: Fill the full height of the parent section */
-            min-height: 400px; /* Minimum height to prevent squishing */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px var(--shadow-color);
-            display: block !important;
-            margin: 0 auto !important; /* Forces centering */
+        flex: 1 1 auto;
+        width: 100% !important;   /* stays within the 1920px .page cap */
+        height: 100% !important;  /* expand vertically with the monitor */
+        min-height: 0 !important; /* remove the previous 400px floor */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        display: block !important;
         }
+
         footer {
-            text-align: center;
-            padding: 10px; /* CHANGED: Reduced padding for less space */
-            background-color: var(--section-bg);
-            font-size: 0.9em;
-            color: var(--footer-text);
-            box-shadow: 0 -2px 4px var(--shadow-color);
-            margin-top: auto; /* NEW: Pushes footer to the bottom if there's extra space */
+        text-align: center;
+        padding: 10px;
+        background-color: var(--section-bg);
+        font-size: 0.9em;
+        color: var(--footer-text);
+        box-shadow: 0 -2px 4px var(--shadow-color);
         }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-            .embed-section {
-                padding: 5px; /* Further reduced on mobile */
-            }
-            gradio-app {
-                width: 100% !important; /* Full width on mobile */
-                min-height: 300px;
-            }
+        h1 { font-size: 2em; }
+        .embed-section { padding: 5px 5px 0; }
         }
     </style>
 </head>
 <body>
+<div class="page">
     <header>
-        <img src="https://immich.tailc9630c.ts.net/api/assets/f47549c1-13c0-4da4-b10f-51e25b6d520b/thumbnail?size=preview&key=rpNR2rUipZBnFH729i4sLT-QhEHa3PkST0GG7SyiB0u_0cQLeMD-irFDthY5Fl2G97A&c=DggKDgIWnKOIdwiYZ4Z4h3mHBnhmoDc%3D" alt="Your Headshot" class="headshot">
+        <img
+            src="https://immich.tailc9630c.ts.net/api/assets/f47549c1-13c0-4da4-b10f-51e25b6d520b/thumbnail?size=preview&key=rpNR2rUipZBnFH729i4sLT-QhEHa3PkST0GG7SyiB0u_0cQLeMD-irFDthY5Fl2G97A&c=DggKDgIWnKOIdwiYZ4Z4h3mHBnhmoDc%3D"
+            alt="Headshot"
+            class="headshot"
+            loading="lazy"
+            />
         <h1>Welcome to my career conversation space</h1>
         <p>Ask me anything about my career in this virtual interview powered by AI. Engage in insightful discussions about my resume, experiences, and more.</p>
     </header>
-    <section class="embed-section"> <!-- No .container for full-width stretching -->
+
+    <section class="embed-section">
         <h2>Try the Chat App Below</h2>
-        <script
-            type="module"
-            src="https://gradio.s3-us-west-2.amazonaws.com/5.34.2/gradio.js"
-        ></script>
-        <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
+        <div class="embed-inner">
+            <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.34.2/gradio.js"></script>
+            <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
+        </div>
+        <noscript>Enable JavaScript to load the chat.</noscript>
     </section>
+
     <footer>
         &copy; 2025 Josiah Partney. All rights reserved.
     </footer>
+</div>
 </body>
 </html>
