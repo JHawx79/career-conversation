@@ -3,152 +3,215 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>My Career Conversation Space - Virtual AI Interview</title>
+    <title>Josiah Partney - Virtual AI Interview</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-        --bg-color: #f4f4f4;
-        --section-bg: #ffffff;
-        --text-color: #333;
-        --accent-color: #007bff;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-        --footer-text: #777;
+            --bg-color: #f8f9fa;
+            --section-bg: #ffffff;
+            --text-color: #212529;
+            --accent-color: #007bff;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --footer-text: #6c757d;
+            --loading-pulse: #e9ecef;
         }
+
         @media (prefers-color-scheme: dark) {
-        :root {
-        --bg-color: #1e1e1e;
-        --section-bg: #2c2c2c;
-        --text-color: #e0e0e0;
-        --accent-color: #4da6ff;
-        --shadow-color: rgba(0, 0, 0, 0.5);
-        --footer-text: #a0a0a0;
-        }
+            :root {
+                --bg-color: #121212;
+                --section-bg: #1e1e1e;
+                --text-color: #f8f9fa;
+                --accent-color: #4da6ff;
+                --shadow-color: rgba(0, 0, 0, 0.4);
+                --footer-text: #adb5bd;
+                --loading-pulse: #2c2c2c;
+            }
         }
 
         /* Base layout */
-        html, body { height: 100%; }
-        body {
-        margin: 0;
-        background: var(--bg-color);
-        color: var(--text-color);
-        font-family: 'Roboto', sans-serif;
-        line-height: 1.6;
-
-        /* Page uses the dynamic viewport height so mobile toolbars don't steal space */
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
+        html, body { 
+            height: 100%; 
+            margin: 0;
+            padding: 0;
         }
 
-        /* Center the whole site and cap its width */
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
         .page {
-        max-width: 1920px;
-        width: 100%;
-        margin-inline: auto;
-        min-height: 100dvh;          /* ensure a definite height to divide */
-        display: flex;
-        flex-direction: column;      /* header | content | footer */
+            max-width: 1400px; /* Sweeter spot for readability than 1920px */
+            width: 100%;
+            margin-inline: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
-        background-color: var(--section-bg);
-        padding: 30px 20px;
-        text-align: center;
-        box-shadow: 0 2px 4px var(--shadow-color);
+            background-color: var(--section-bg);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 10;
         }
+
         .headshot {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 8px var(--shadow-color);
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            border: 3px solid var(--accent-color);
         }
+
         h1 {
-        font-size: 2.5em;
-        margin: 0 0 5px;
-        color: var(--accent-color);
-        }
-        p {
-        font-size: 1.2em;
-        max-width: 800px;
-        margin: 0 auto 5px;
+            font-size: 2.2em;
+            margin: 0 0 10px;
+            color: var(--accent-color);
+            font-weight: 700;
         }
 
-        /* Middle section fills the remaining height */
+        .subtitle {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto 15px;
+            opacity: 0.9;
+        }
+
+        /* Suggested Questions Chips */
+        .suggestions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .chip {
+            background: var(--bg-color);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: default;
+        }
+
+        /* Middle section */
         .embed-section {
-        padding: 10px 10px 0;
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;   /* take all leftover vertical space */
-        min-height: 0;    /* IMPORTANT for flex children to be allowed to grow */
-        background: transparent;
-        }
-        .embed-section h2 {
-        margin: 0 0 10px;
-        text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 600px; /* Ensure there's always space */
         }
 
-        /* Wrapper that lets the chat expand to fill height and stay centered */
+        .status-msg {
+            text-align: center;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            color: var(--footer-text);
+        }
+
         .embed-inner {
-        flex: 1 1 auto;          /* the row that grows */
-        min-height: 0;           /* allow child to size beyond content min */
-        display: flex;
-        align-items: stretch;    /* child gets full height */
-        justify-content: center; /* horizontally center gradio */
+            flex: 1;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            position: relative;
         }
 
-        /* Gradio fills all available height and width of the centered area */
+        /* Gradio Styling & Loading State */
         gradio-app {
-        flex: 1 1 auto;
-        width: 100% !important;   /* stays within the 1920px .page cap */
-        height: 100% !important;  /* expand vertically with the monitor */
-        min-height: 0 !important; /* remove the previous 400px floor */
-        border-radius: 8px;
-        box-shadow: 0 4px 8px var(--shadow-color);
-        display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        /* Pulse effect while loading */
+        gradio-app:empty {
+            background: var(--loading-pulse);
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        gradio-app:empty::after {
+            content: "Initializing AI Interviewer...";
+            font-weight: bold;
+            color: var(--accent-color);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
         }
 
         footer {
-        text-align: center;
-        padding: 10px;
-        background-color: var(--section-bg);
-        font-size: 0.9em;
-        color: var(--footer-text);
-        box-shadow: 0 -2px 4px var(--shadow-color);
+            text-align: center;
+            padding: 20px;
+            background-color: var(--section-bg);
+            font-size: 0.85em;
+            color: var(--footer-text);
+            border-top: 1px solid var(--shadow-color);
         }
 
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-        h1 { font-size: 2em; }
-        .embed-section { padding: 5px 5px 0; }
+            h1 { font-size: 1.8em; }
+            .headshot { width: 100px; height: 100px; }
+            .embed-section { padding: 10px; }
+            .chip { font-size: 0.75em; }
         }
     </style>
 </head>
 <body>
+
 <div class="page">
     <header>
         <img
             src="https://immich.tailc9630c.ts.net/api/assets/f47549c1-13c0-4da4-b10f-51e25b6d520b/thumbnail?size=preview&key=rpNR2rUipZBnFH729i4sLT-QhEHa3PkST0GG7SyiB0u_0cQLeMD-irFDthY5Fl2G97A&c=DggKDgIWnKOIdwiYZ4Z4h3mHBnhmoDc%3D"
-            alt="Headshot"
+            alt="Josiah Partney Headshot"
             class="headshot"
             loading="lazy"
             />
-        <h1>Welcome to my career conversation space</h1>
-        <p>Ask me anything about my career in this virtual interview powered by AI. Engage in insightful discussions about my resume, experiences, and more.</p>
+        <h1>Josiah Partney</h1>
+        <p class="subtitle">Welcome to my virtual career space. This AI is trained on my professional background and is ready to answer your questions.</p>
+        
+        <div class="suggestions">
+            <span class="chip">"Tell me about your experience"</span>
+            <span class="chip">"What are your top skills?"</span>
+            <span class="chip">"Describe a difficult project"</span>
+        </div>
     </header>
 
     <section class="embed-section">
-        <h2>Try the Chat App Below</h2>
+        <div class="status-msg">
+            🤖 <b>Please wait a moment for the chat to load.</b><br>
+            If the interface does not appear, please refresh the page.
+        </div>
+
         <div class="embed-inner">
             <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.34.2/gradio.js"></script>
             <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
         </div>
-        <noscript>Enable JavaScript to load the chat.</noscript>
     </section>
 
     <footer>
-        &copy; 2025 Josiah Partney. All rights reserved.
+        &copy; 2025 Josiah Partney • Built with Gradio & AI
     </footer>
 </div>
+
 </body>
 </html>
