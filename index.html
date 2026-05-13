@@ -235,6 +235,91 @@
     .mini-card h3 { margin: 8px 0 8px; color: var(--navy); letter-spacing: -.025em; }
     .mini-card p { margin: 0; color: var(--muted); line-height: 1.55; font-size: .96rem; }
 
+
+
+    .idea-garden {
+      margin: 0 30px 30px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #fffdf8;
+      overflow: hidden;
+    }
+    .idea-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 250, 243, .92);
+    }
+    .idea-toolbar span { color: var(--muted); font-size: .92rem; font-weight: 700; }
+    .idea-list {
+      max-height: 720px;
+      overflow-y: auto;
+      padding: 12px;
+      scroll-behavior: smooth;
+    }
+    .idea-item {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,.68);
+      overflow: hidden;
+    }
+    .idea-item + .idea-item { margin-top: 12px; }
+    .idea-toggle {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 18px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--navy);
+      font: inherit;
+    }
+    .idea-toggle:hover { background: rgba(21,34,56,.035); }
+    .idea-title { margin: 0 0 6px; font-weight: 850; letter-spacing: -.025em; font-size: 1.06rem; }
+    .idea-meta { color: var(--muted); font-size: .86rem; font-weight: 700; }
+    .idea-chevron { color: var(--wine); font-size: 1.15rem; transition: transform .18s ease; }
+    .idea-item[open] .idea-chevron { transform: rotate(90deg); }
+    .idea-content {
+      display: none;
+      padding: 0 18px 22px;
+      color: #354253;
+      line-height: 1.68;
+    }
+    .idea-item[open] .idea-content { display: block; }
+    .idea-content h1, .idea-content h2, .idea-content h3 {
+      color: var(--navy);
+      letter-spacing: -.035em;
+      line-height: 1.15;
+      margin: 1.1em 0 .45em;
+    }
+    .idea-content p { margin: 0 0 1em; }
+    .idea-content ul { margin: .4em 0 1em; padding-left: 1.25rem; }
+    .idea-content blockquote {
+      margin: 1rem 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--gold);
+      background: rgba(198,150,74,.09);
+      border-radius: 14px;
+    }
+    .idea-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .idea-tag {
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(122,38,58,.08);
+      color: var(--wine);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .idea-empty { padding: 26px; color: var(--muted); text-align: center; }
+
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -339,27 +424,19 @@
     <section id="ideas" class="wrap">
       <div class="section-card">
         <div class="section-head">
-          <h2>Ideas I’m exploring</h2>
+          <h2>Idea Garden</h2>
           <p>
-            A small starting point for the future “idea garden” — eventually this could become a feed of short posts written from private conversations with a local agent, then made available to the chatbot as fresh context.
+            Longer-form notes behind the short social breadcrumbs — a contained, living space for ideas on business, finance, AI strategy, and human-centered problem solving. The newest idea opens first; older ideas stay easy to browse without cluttering the page.
           </p>
         </div>
-        <div class="grid">
-          <article class="mini-card">
-            <span>01</span>
-            <h3>Personal AI representatives</h3>
-            <p>How can AI represent someone thoughtfully without pretending to replace them?</p>
-          </article>
-          <article class="mini-card">
-            <span>02</span>
-            <h3>Compliance-friendly AI</h3>
-            <p>Practical, local-first workflows for financial professionals who need trust and guardrails.</p>
-          </article>
-          <article class="mini-card">
-            <span>03</span>
-            <h3>Human-centered problem solving</h3>
-            <p>Using technology to make conversations, decisions, and service feel more personal — not less.</p>
-          </article>
+        <div class="idea-garden" aria-live="polite">
+          <div class="idea-toolbar">
+            <span id="ideaCount">Loading ideas…</span>
+            <span>Newest expanded by default</span>
+          </div>
+          <div id="ideaList" class="idea-list">
+            <div class="idea-empty">Loading the latest ideas…</div>
+          </div>
         </div>
       </div>
     </section>
@@ -419,6 +496,111 @@
       loader.style.padding = '0';
       loader.appendChild(frame);
     });
+
+
+    const ideaList = document.getElementById('ideaList');
+    const ideaCount = document.getElementById('ideaCount');
+
+    function escapeHtml(value) {
+      return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function inlineMarkdown(text) {
+      return escapeHtml(text)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    }
+
+    function renderMarkdown(markdown) {
+      const lines = markdown.split(/\r?\n/);
+      let html = '';
+      let inList = false;
+      let inQuote = false;
+
+      const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
+      const closeQuote = () => { if (inQuote) { html += '</blockquote>'; inQuote = false; } };
+
+      lines.forEach((raw) => {
+        const line = raw.trim();
+        if (!line) { closeList(); closeQuote(); return; }
+
+        if (line.startsWith('> ')) {
+          closeList();
+          if (!inQuote) { html += '<blockquote>'; inQuote = true; }
+          html += `<p>${inlineMarkdown(line.slice(2))}</p>`;
+          return;
+        }
+        closeQuote();
+
+        if (line.startsWith('### ')) { closeList(); html += `<h3>${inlineMarkdown(line.slice(4))}</h3>`; return; }
+        if (line.startsWith('## ')) { closeList(); html += `<h2>${inlineMarkdown(line.slice(3))}</h2>`; return; }
+        if (line.startsWith('# ')) { closeList(); html += `<h1>${inlineMarkdown(line.slice(2))}</h1>`; return; }
+        if (line.startsWith('- ')) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += `<li>${inlineMarkdown(line.slice(2))}</li>`;
+          return;
+        }
+        closeList();
+        html += `<p>${inlineMarkdown(line)}</p>`;
+      });
+      closeList();
+      closeQuote();
+      return html;
+    }
+
+    async function loadIdeas() {
+      try {
+        const response = await fetch('ideas/index.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Idea index not found');
+        const ideas = await response.json();
+        ideaCount.textContent = `${ideas.length} idea${ideas.length === 1 ? '' : 's'} published`;
+        ideaList.innerHTML = '';
+
+        for (const [index, idea] of ideas.entries()) {
+          const item = document.createElement('article');
+          item.className = 'idea-item';
+          if (index === 0) item.setAttribute('open', '');
+
+          const contentResponse = await fetch(idea.file, { cache: 'no-store' });
+          const markdown = contentResponse.ok ? await contentResponse.text() : 'This idea could not be loaded.';
+          const tags = (idea.tags || []).map(tag => `<span class="idea-tag">${escapeHtml(tag)}</span>`).join('');
+
+          item.innerHTML = `
+            <button class="idea-toggle" type="button" aria-expanded="${index === 0 ? 'true' : 'false'}">
+              <span>
+                <h3 class="idea-title">${escapeHtml(idea.title)}</h3>
+                <span class="idea-meta">${escapeHtml(idea.date)} · ${escapeHtml(idea.summary)}</span>
+              </span>
+              <span class="idea-chevron">›</span>
+            </button>
+            <div class="idea-content">
+              ${renderMarkdown(markdown)}
+              <div class="idea-tags">${tags}</div>
+            </div>
+          `;
+
+          const toggle = item.querySelector('.idea-toggle');
+          toggle.addEventListener('click', () => {
+            const isOpen = item.hasAttribute('open');
+            item.toggleAttribute('open', !isOpen);
+            toggle.setAttribute('aria-expanded', String(!isOpen));
+          });
+          ideaList.appendChild(item);
+        }
+      } catch (error) {
+        ideaCount.textContent = 'Ideas unavailable';
+        ideaList.innerHTML = '<div class="idea-empty">Ideas are being prepared. Please check back soon.</div>';
+      }
+    }
+
+    loadIdeas();
+
   </script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Human-centered AI should make work feel more personal, not less",
+    "date": "2026-05-12",
+    "summary": "A starting point for thinking about AI as a relationship-amplifying tool.",
+    "file": "ideas/posts/human-centered-ai.md",
+    "tags": ["AI strategy", "human-centered design", "business"]
+  },
+  {
+    "title": "Personal AI representatives need trust before scale",
+    "date": "2026-05-11",
+    "summary": "Why a useful AI representative should be transparent, bounded, and personal.",
+    "file": "ideas/posts/personal-ai-representatives.md",
+    "tags": ["personal AI", "trust", "career"]
+  }
+]
