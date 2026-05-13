@@ -1,16 +1,9 @@
 [
   {
-    "title": "Human-centered AI should make work feel more personal, not less",
+    "title": "The Value of AI Is Leverage, Not Replacement",
     "date": "2026-05-12",
-    "summary": "A starting point for thinking about AI as a relationship-amplifying tool.",
-    "file": "ideas/posts/human-centered-ai.md",
-    "tags": ["AI strategy", "human-centered design", "business"]
-  },
-  {
-    "title": "Personal AI representatives need trust before scale",
-    "date": "2026-05-11",
-    "summary": "Why a useful AI representative should be transparent, bounded, and personal.",
-    "file": "ideas/posts/personal-ai-representatives.md",
-    "tags": ["personal AI", "trust", "career"]
+    "summary": "A reflection on why AI's strongest value is not removing people from the loop, but giving them more leverage for work that still requires intent, taste, judgment, and trust.",
+    "file": "ideas/posts/ai-leverage-not-replacement.md",
+    "tags": ["AI strategy", "human-centered AI", "business", "leverage"]
   }
 ]
