@@ -1,7 +1,5 @@
 ## The Value of AI Is Leverage, Not Replacement
 
-_Date: 2026-05-12_
-
 Recent projects have reminded me of something important: the real value of AI is not simply automation. It is leverage.
 
 When I try to make AI systems fully autonomous, especially with local models, I still see places where agent loops stumble over themselves. They can get repetitive, miss context, or overcomplicate a task that still needs human judgment. API-based models are getting very powerful, and local models are improving quickly, but the gap is still noticeable.
