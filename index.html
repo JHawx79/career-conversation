@@ -1,211 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Josiah Partney - Virtual AI Interview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --section-bg: #ffffff;
-            --text-color: #212529;
-            --accent-color: #007bff;
-            --shadow-color: rgba(0, 0, 0, 0.08);
-            --footer-text: #6c757d;
-            --loading-pulse: #e9ecef;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Josiah Partney | Career Conversation</title>
+  <meta name="description" content="A living career conversation space for Josiah Partney — finance, business, AI strategy, and human-centered problem solving." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --paper: #fffaf3;
+      --ink: #1f2933;
+      --muted: #687381;
+      --line: rgba(31, 41, 51, 0.12);
+      --navy: #152238;
+      --wine: #7a263a;
+      --gold: #c6964a;
+      --green: #315f56;
+      --shadow: 0 24px 70px rgba(21, 34, 56, 0.14);
+      --radius: 28px;
+    }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #121212;
-                --section-bg: #1e1e1e;
-                --text-color: #f8f9fa;
-                --accent-color: #4da6ff;
-                --shadow-color: rgba(0, 0, 0, 0.4);
-                --footer-text: #adb5bd;
-                --loading-pulse: #2c2c2c;
-            }
-        }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(198, 150, 74, 0.22), transparent 34rem),
+        radial-gradient(circle at top right, rgba(122, 38, 58, 0.18), transparent 32rem),
+        linear-gradient(135deg, #fbf6ee 0%, var(--bg) 55%, #eee7dc 100%);
+    }
 
-        /* Base layout */
-        html, body { 
-            height: 100%; 
-            margin: 0;
-            padding: 0;
-        }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
 
-        body {
-            background: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-        }
+    header {
+      padding: 28px 0 18px;
+    }
 
-        .page {
-            max-width: 1400px; /* Sweeter spot for readability than 1920px */
-            width: 100%;
-            margin-inline: auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
 
-        header {
-            background-color: var(--section-bg);
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px var(--shadow-color);
-            z-index: 10;
-        }
+    .nav-links { display: flex; gap: 16px; color: var(--muted); font-weight: 600; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--wine); }
 
-        .headshot {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow-color);
-            border: 3px solid var(--accent-color);
-        }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 34px;
+      align-items: center;
+      padding: 42px 0 28px;
+    }
 
-        h1 {
-            font-size: 2.2em;
-            margin: 0 0 10px;
-            color: var(--accent-color);
-            font-weight: 700;
-        }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.72);
+      color: var(--green);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
 
-        .subtitle {
-            font-size: 1.1em;
-            max-width: 700px;
-            margin: 0 auto 15px;
-            opacity: 0.9;
-        }
+    h1 {
+      margin: 18px 0 16px;
+      max-width: 760px;
+      color: var(--navy);
+      font-size: clamp(2.55rem, 6vw, 5.7rem);
+      line-height: 0.96;
+      letter-spacing: -0.075em;
+    }
 
-        /* Suggested Questions Chips */
-        .suggestions {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .chip {
-            background: var(--bg-color);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            cursor: default;
-        }
+    .lead {
+      max-width: 690px;
+      margin: 0;
+      color: #394554;
+      font-size: clamp(1.04rem, 2vw, 1.28rem);
+      line-height: 1.65;
+    }
 
-        /* Middle section */
-        .embed-section {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 600px; /* Ensure there's always space */
-        }
+    .lead strong { color: var(--wine); }
 
-        .status-msg {
-            text-align: center;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            color: var(--footer-text);
-        }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .primary { background: var(--navy); color: white; box-shadow: 0 14px 32px rgba(21, 34, 56, .22); }
+    .secondary { background: rgba(255, 250, 243, .82); color: var(--navy); border: 1px solid var(--line); }
 
-        .embed-inner {
-            flex: 1;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            position: relative;
-        }
+    .portrait-card {
+      position: relative;
+      min-height: 560px;
+      border-radius: 36px;
+      overflow: hidden;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+    }
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(.96) contrast(1.02);
+    }
+    .portrait-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(21,34,56,.62), transparent 52%);
+    }
+    .photo-caption {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255, 250, 243, 0.9);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+    }
+    .photo-caption b { color: var(--navy); }
+    .photo-caption p { margin: 6px 0 0; color: var(--muted); line-height: 1.45; font-size: .95rem; }
 
-        /* Gradio Styling & Loading State */
-        gradio-app {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px var(--shadow-color);
-        }
+    section { padding: 34px 0; }
+    .section-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 243, .82);
+      box-shadow: 0 16px 48px rgba(21, 34, 56, 0.08);
+      overflow: hidden;
+    }
+    .section-head { padding: 30px 30px 18px; }
+    .section-head h2 { margin: 0 0 10px; color: var(--navy); font-size: clamp(1.7rem, 3vw, 2.45rem); letter-spacing: -0.045em; }
+    .section-head p { margin: 0; max-width: 740px; color: var(--muted); line-height: 1.65; }
 
-        /* Pulse effect while loading */
-        gradio-app:empty {
-            background: var(--loading-pulse);
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        gradio-app:empty::after {
-            content: "Initializing AI Interviewer...";
-            font-weight: bold;
-            color: var(--accent-color);
-            animation: pulse 1.8s infinite;
-        }
+    .chat-loader {
+      margin: 0 30px 30px;
+      min-height: 640px;
+      border: 1px dashed rgba(21,34,56,.2);
+      border-radius: 24px;
+      background:
+        linear-gradient(120deg, rgba(21,34,56,.05), rgba(122,38,58,.06)),
+        #fffdf8;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-panel {
+      width: min(640px, calc(100% - 36px));
+      text-align: center;
+      padding: 30px;
+    }
+    .loader-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border-radius: 18px;
+      background: var(--navy);
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 16px 35px rgba(21,34,56,.22);
+    }
+    .loader-panel h3 { margin: 0 0 10px; color: var(--navy); font-size: 1.45rem; letter-spacing: -.03em; }
+    .loader-panel p { margin: 0 auto 20px; color: var(--muted); line-height: 1.6; max-width: 540px; }
+    .status { margin-top: 14px; min-height: 22px; color: var(--green); font-size: .94rem; font-weight: 700; }
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 3px solid rgba(21,34,56,.15);
+      border-top-color: var(--wine);
+      animation: spin 1s linear infinite;
+    }
+    .loading .spinner { display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
+    .chat-frame {
+      width: 100%;
+      min-height: 720px;
+      display: block;
+      background: white;
+      border: 0;
+      border-radius: 24px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: var(--section-bg);
-            font-size: 0.85em;
-            color: var(--footer-text);
-            border-top: 1px solid var(--shadow-color);
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 0 30px 30px;
+    }
+    .mini-card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--line);
+    }
+    .mini-card span { color: var(--gold); font-weight: 900; }
+    .mini-card h3 { margin: 8px 0 8px; color: var(--navy); letter-spacing: -.025em; }
+    .mini-card p { margin: 0; color: var(--muted); line-height: 1.55; font-size: .96rem; }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8em; }
-            .headshot { width: 100px; height: 100px; }
-            .embed-section { padding: 10px; }
-            .chip { font-size: 0.75em; }
-        }
-    </style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 0 30px 30px;
+    }
+    .contact-box {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+    }
+    .contact-box h3 { margin: 0 0 8px; color: var(--navy); letter-spacing: -.025em; }
+    .contact-box p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .note {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(49,95,86,.09);
+      color: var(--green);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    footer {
+      padding: 34px 0 44px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 860px) {
+      .hero, .contact-layout { grid-template-columns: 1fr; }
+      .portrait-card, .portrait-card img { min-height: 430px; }
+      .grid { grid-template-columns: 1fr; }
+      .nav { align-items: flex-start; }
+      .nav-links { display: none; }
+      .chat-loader { margin: 0 16px 18px; min-height: 560px; }
+      .section-head, .grid, .contact-layout { padding-left: 18px; padding-right: 18px; }
+    }
+  </style>
 </head>
 <body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Primary navigation">
+      <div>Josiah Partney</div>
+      <div class="nav-links">
+        <a href="#conversation">Conversation</a>
+        <a href="#ideas">Ideas</a>
+        <a href="#connect">Connect</a>
+      </div>
+    </nav>
+  </header>
 
-<div class="page">
-    <header>
-        <h1>Josiah Partney</h1>
-        <p class="subtitle">Welcome to my virtual career space. This AI chat bot knows my professional background and is ready to answer your questions. If you would like to connect, please provide your email in the chat.</p>
-        
-        <div class="suggestions">
-            <span class="chip">"Tell me about your experience"</span>
-            <span class="chip">"What are your top skills?"</span>
-            <span class="chip">"Describe a difficult project"</span>
+  <main>
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">● Living career conversation space</div>
+        <h1>Finance, business, AI strategy, and human-centered problem solving.</h1>
+        <p class="lead">
+          I’m building a more personal way to understand my work, values, and ideas — a place where professional context meets thoughtful conversation. Ask the AI about my background, leadership style, career story, or the problems I’m drawn to solving.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#conversation">Start the conversation →</a>
+          <a class="button secondary" href="#ideas">See current ideas</a>
         </div>
-    </header>
+      </div>
 
-    <section class="embed-section">
-        <div class="status-msg">
-            🤖 <b>Please wait a moment for the chat to load.</b><br>
-            If the interface does not appear, please refresh the page.
+      <aside class="portrait-card" aria-label="Professional photo of Josiah Partney">
+        <img src="assets/professional-headshot.jpg" alt="Professional headshot of Josiah Partney" />
+        <div class="photo-caption">
+          <b>Professional, personal, and still in progress.</b>
+          <p>This site is intentionally a living project — part portfolio, part idea garden, part AI experiment.</p>
         </div>
-
-        <div class="embed-inner">
-            <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.34.2/gradio.js"></script>
-            <gradio-app src="https://jhawx79-career-conversation.hf.space"></gradio-app>
-        </div>
+      </aside>
     </section>
 
-    <footer>
-        &copy; 2025 Josiah Partney • Built with Gradio & AI
-    </footer>
-</div>
+    <section id="conversation" class="wrap">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>Talk with my AI career companion</h2>
+          <p>
+            This chatbot runs on a Hugging Face Space and may take a moment to wake up. Loading it on demand keeps the page lighter and more budget-friendly while still giving visitors a warm path into the conversation.
+          </p>
+        </div>
+        <div id="chatLoader" class="chat-loader">
+          <div class="loader-panel">
+            <div class="loader-icon">AI</div>
+            <h3>Ready when you are.</h3>
+            <p>
+              When you click below, the chat interface will load here. If it takes a bit, that usually means the Space is spinning up after being idle.
+            </p>
+            <button id="loadChat" class="button primary" type="button">
+              <span class="spinner" aria-hidden="true"></span>
+              Load conversation
+            </button>
+            <div id="chatStatus" class="status" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="ideas" class="wrap">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>Ideas I’m exploring</h2>
+          <p>
+            A small starting point for the future “idea garden” — eventually this could become a feed of short posts written from private conversations with a local agent, then made available to the chatbot as fresh context.
+          </p>
+        </div>
+        <div class="grid">
+          <article class="mini-card">
+            <span>01</span>
+            <h3>Personal AI representatives</h3>
+            <p>How can AI represent someone thoughtfully without pretending to replace them?</p>
+          </article>
+          <article class="mini-card">
+            <span>02</span>
+            <h3>Compliance-friendly AI</h3>
+            <p>Practical, local-first workflows for financial professionals who need trust and guardrails.</p>
+          </article>
+          <article class="mini-card">
+            <span>03</span>
+            <h3>Human-centered problem solving</h3>
+            <p>Using technology to make conversations, decisions, and service feel more personal — not less.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="connect" class="wrap">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>Connect</h2>
+          <p>
+            If the conversation sparks a reason to follow up, you can share your contact information with the chatbot. It can route a private push notification directly to me — both as a simple way to connect and as a small proof of concept for how conversational AI can securely trigger useful real-world workflows.
+          </p>
+        </div>
+        <div class="contact-layout">
+          <div class="contact-box">
+            <h3>How follow-up works</h3>
+            <p>The assistant may ask for your name, email, and a brief message only when you choose to connect. That information is used only for follow-up related to this page.</p>
+          </div>
+          <div class="contact-box note">
+            Your contact details are not used for marketing lists, resale, or automated outreach. They simply help me respond personally if you decide to share them.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <strong>AI disclosure:</strong> This site includes an AI assistant designed to discuss Josiah Partney’s career context and ideas. It is not Josiah, may make mistakes, and should be treated as a conversation aid — not a final source of truth.
+    <br><br>
+    © 2026 Josiah Partney
+  </footer>
+
+  <script>
+    const loadButton = document.getElementById('loadChat');
+    const loader = document.getElementById('chatLoader');
+    const status = document.getElementById('chatStatus');
+    let hasLoaded = false;
+
+    loadButton.addEventListener('click', () => {
+      if (hasLoaded) return;
+      hasLoaded = true;
+      loader.classList.add('loading');
+      loadButton.disabled = true;
+      status.textContent = 'Waking up the conversation space… this can take a moment.';
+
+      const frame = document.createElement('iframe');
+      frame.className = 'chat-frame';
+      frame.title = 'Josiah Partney AI career conversation';
+      frame.loading = 'eager';
+      frame.allow = 'clipboard-write; microphone';
+      frame.src = 'https://jhawx79-career-conversation.hf.space';
+      frame.onload = () => {
+        status.textContent = 'Conversation loaded.';
+      };
+
+      loader.innerHTML = '';
+      loader.style.display = 'block';
+      loader.style.padding = '0';
+      loader.appendChild(frame);
+    });
+  </script>
 </body>
 </html>
