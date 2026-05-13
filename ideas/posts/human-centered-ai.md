@@ -1,4 +1,4 @@
-# Human-centered AI should make work feel more personal, not less
+## Human-centered AI should make work feel more personal, not less
 
 The best use of AI is not simply to automate people out of the conversation. It is to help people think more clearly, respond more thoughtfully, and serve others with better context.
 

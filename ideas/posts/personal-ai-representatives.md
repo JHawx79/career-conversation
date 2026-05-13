@@ -1,4 +1,4 @@
-# Personal AI representatives need trust before scale
+## Personal AI representatives need trust before scale
 
 A personal AI representative is only useful if people understand what it is — and what it is not.
 
