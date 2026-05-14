@@ -1,16 +1,16 @@
 [
   {
-    "title": "The Value of AI Is Leverage, Not Replacement",
-    "date": "2026-05-12",
-    "summary": "A reflection on why AI's strongest value is not removing people from the loop, but giving them more leverage for work that still requires intent, taste, judgment, and trust.",
-    "file": "ideas/posts/ai-leverage-not-replacement.md",
-    "tags": ["AI strategy", "human-centered AI", "business", "leverage"]
-  },
-  {
     "title": "Dense vs Mixture-of-Experts: Why I Switched to a Dual-Model Setup",
     "date": "2026-05-14",
     "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent — and why open-source local models are getting production-ready.",
     "file": "ideas/posts/2026-05-14_dense-vs-moe-dual-model-setup.md",
     "tags": ["AI", "Hermes Agent", "Local LLM", "Mac Studio", "Open Source", "MoE", "Quantization"]
+  },
+  {
+    "title": "The Value of AI Is Leverage, Not Replacement",
+    "date": "2026-05-12",
+    "summary": "A reflection on why AI's strongest value is not removing people from the loop, but giving them more leverage for work that still requires intent, taste, judgment, and trust.",
+    "file": "ideas/posts/ai-leverage-not-replacement.md",
+    "tags": ["AI strategy", "human-centered AI", "business", "leverage"]
   }
 ]
