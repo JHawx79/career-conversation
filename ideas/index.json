@@ -1,23 +1,56 @@
 [
   {
+    "title": "What Problem Are You Trying to Solve with AI?",
+    "date": "2026-05-16",
+    "summary": "Dan Martell's GAIN Matrix framework for thinking about where AI actually fits in your business \u2014 and why solving real problems matters more than chasing tools.",
+    "file": "posts/what-problem-are-you-trying-to-solve-with-ai.md",
+    "tags": [
+      "AI",
+      "Dan Martell",
+      "GAIN Matrix",
+      "business",
+      "consulting"
+    ]
+  },
+  {
     "title": "Consumer or Creator? Where I Stand on AI Right Now",
     "date": "2026-05-14",
-    "summary": "From Microsoft Recall skeptic to local AI enthusiast — how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
+    "summary": "From Microsoft Recall skeptic to local AI enthusiast \u2014 how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
     "file": "ideas/posts/2026-05-14_consumer-or-creator-ai-reflection.md",
-    "tags": ["AI", "Local AI", "Privacy", "Personal Journey", "Creator Economy", "Reflection"]
+    "tags": [
+      "AI",
+      "Local AI",
+      "Privacy",
+      "Personal Journey",
+      "Creator Economy",
+      "Reflection"
+    ]
   },
   {
     "title": "Dense vs Mixture-of-Experts: Why I Switched to a Dual-Model Setup",
     "date": "2026-05-14",
-    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent — and why open-source local models are getting production-ready.",
+    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent \u2014 and why open-source local models are getting production-ready.",
     "file": "ideas/posts/2026-05-14_dense-vs-moe-dual-model-setup.md",
-    "tags": ["AI", "Hermes Agent", "Local LLM", "Mac Studio", "Open Source", "MoE", "Quantization"]
+    "tags": [
+      "AI",
+      "Hermes Agent",
+      "Local LLM",
+      "Mac Studio",
+      "Open Source",
+      "MoE",
+      "Quantization"
+    ]
   },
   {
     "title": "The Value of AI Is Leverage, Not Replacement",
     "date": "2026-05-12",
     "summary": "A reflection on why AI's strongest value is not removing people from the loop, but giving them more leverage for work that still requires intent, taste, judgment, and trust.",
     "file": "ideas/posts/ai-leverage-not-replacement.md",
-    "tags": ["AI strategy", "human-centered AI", "business", "leverage"]
+    "tags": [
+      "AI strategy",
+      "human-centered AI",
+      "business",
+      "leverage"
+    ]
   }
 ]
