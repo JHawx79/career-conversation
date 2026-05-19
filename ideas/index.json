@@ -1,8 +1,23 @@
 [
   {
+    "title": "The Open Source Advantage: Why Control Beats Convenience",
+    "date": "2026-05-19",
+    "summary": "Why I run my entire tech stack on open source — from file storage to AI development — and how control, privacy, and AI-assisted development are changing what is achievable for both hobbyists and businesses.",
+    "file": "ideas/posts/open-source-advantage.md",
+    "tags": [
+      "Open Source",
+      "Home Lab",
+      "AI",
+      "Privacy",
+      "Tailscale",
+      "Self-hosted",
+      "On-premises"
+    ]
+  },
+  {
     "title": "What Problem Are You Trying to Solve with AI?",
     "date": "2026-05-16",
-    "summary": "Dan Martell's GAIN Matrix framework for thinking about where AI actually fits in your business \u2014 and why solving real problems matters more than chasing tools.",
+    "summary": "Dan Martell's GAIN Matrix framework for thinking about where AI actually fits in your business — and why solving real problems matters more than chasing tools.",
     "file": "ideas/posts/what-problem-are-you-trying-to-solve-with-ai.md",
     "tags": [
       "AI",
@@ -15,7 +30,7 @@
   {
     "title": "Consumer or Creator? Where I Stand on AI Right Now",
     "date": "2026-05-14",
-    "summary": "From Microsoft Recall skeptic to local AI enthusiast \u2014 how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
+    "summary": "From Microsoft Recall skeptic to local AI enthusiast — how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
     "file": "ideas/posts/2026-05-14_consumer-or-creator-ai-reflection.md",
     "tags": [
       "AI",
@@ -29,7 +44,7 @@
   {
     "title": "Dense vs Mixture-of-Experts: Why I Switched to a Dual-Model Setup",
     "date": "2026-05-14",
-    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent \u2014 and why open-source local models are getting production-ready.",
+    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent — and why open-source local models are getting production-ready.",
     "file": "ideas/posts/2026-05-14_dense-vs-moe-dual-model-setup.md",
     "tags": [
       "AI",
