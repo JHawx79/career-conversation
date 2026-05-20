@@ -1,4 +1,4 @@
-## Lean Purpose-Built AI Solutions
+## Lean Purpose-Built AI Solutions Beat Bloated Platforms
 
 The more AI software that floods the market, the more I'm seeing lean, purpose-built solutions leaving bloated platforms in the dust.
 
