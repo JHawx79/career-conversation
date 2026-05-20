@@ -1,9 +1,4 @@
-# Draft: Lean Purpose-Built AI Solutions
-
-**Status:** Ready for final review
-**Date:** May 20, 2026
-
----
+## Lean Purpose-Built AI Solutions
 
 The more AI software that floods the market, the more I'm seeing lean, purpose-built solutions leaving bloated platforms in the dust.
 
@@ -18,9 +13,3 @@ What I'm seeing now is that AI amplifies whatever you already have. If your proc
 So before you buy the next AI tool, ask: what is my process, and how does it leverage this?
 
 Because right now, the smartest move isn't adding more AI — it's designing better fundamentals.
-
----
-
-**Social breadcrumb (LinkedIn/X):**
-
-The hype for AI tools in 2026 is actually making simplicity more valuable, not less. My take on why lean and purpose-built solutions beat bloated platforms. https://jpartney.space
