@@ -37,7 +37,7 @@
     }
 
     a { color: inherit; }
-    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    .wrap { width: min(1280px, calc(100% - 36px)); margin: 0 auto; }
 
     header {
       padding: 28px 0 18px;
@@ -238,7 +238,7 @@
 
 
     .idea-garden {
-      margin: 0 30px 30px;
+      margin: 0 18px 28px;
       border: 1px solid var(--line);
       border-radius: 24px;
       background: #fffdf8;
@@ -250,15 +250,15 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 16px 18px;
+      padding: 16px 22px;
       border-bottom: 1px solid var(--line);
       background: rgba(255, 250, 243, .92);
     }
     .idea-toolbar span { color: var(--muted); font-size: .92rem; font-weight: 700; }
     .idea-list {
-      max-height: 720px;
+      max-height: 760px;
       overflow-y: auto;
-      padding: 12px;
+      padding: 16px;
       scroll-behavior: smooth;
     }
     .idea-item {
@@ -267,31 +267,32 @@
       background: rgba(255,255,255,.68);
       overflow: hidden;
     }
-    .idea-item + .idea-item { margin-top: 12px; }
+    .idea-item + .idea-item { margin-top: 14px; }
     .idea-toggle {
       width: 100%;
       border: 0;
       background: transparent;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 14px;
+      gap: 16px;
       align-items: center;
-      padding: 18px;
+      padding: 22px 24px;
       text-align: left;
       cursor: pointer;
       color: var(--navy);
       font: inherit;
     }
     .idea-toggle:hover { background: rgba(21,34,56,.035); }
-    .idea-title { margin: 0 0 6px; font-weight: 850; letter-spacing: -.025em; font-size: 1.06rem; }
-    .idea-meta { color: var(--muted); font-size: .86rem; font-weight: 700; }
+    .idea-title { margin: 0 0 6px; font-weight: 850; letter-spacing: -.025em; font-size: clamp(1.08rem, 1.3vw, 1.22rem); }
+    .idea-meta { color: var(--muted); font-size: .9rem; font-weight: 700; line-height: 1.45; }
     .idea-chevron { color: var(--wine); font-size: 1.15rem; transition: transform .18s ease; }
     .idea-item[open] .idea-chevron { transform: rotate(90deg); }
     .idea-content {
       display: none;
-      padding: 0 18px 22px;
+      padding: 0 24px 26px;
       color: #354253;
-      line-height: 1.68;
+      font-size: 1.03rem;
+      line-height: 1.72;
     }
     .idea-item[open] .idea-content { display: block; }
     .idea-content h1, .idea-content h2, .idea-content h3 {
@@ -361,6 +362,11 @@
       .nav-links { display: none; }
       .chat-loader { margin: 0 16px 18px; min-height: 560px; }
       .section-head, .grid, .contact-layout { padding-left: 18px; padding-right: 18px; }
+      .idea-garden { margin: 0 12px 18px; }
+      .idea-list { padding: 10px; }
+      .idea-toolbar { padding: 14px 16px; }
+      .idea-toggle { padding: 16px; }
+      .idea-content { padding: 0 16px 20px; font-size: 1rem; }
     }
   </style>
 </head>
