@@ -1,5 +1,18 @@
 [
   {
+    "title": "The Human-in-the-Loop Advantage & Why I Don't Trust Fully Autonomous AI",
+    "date": "2026-05-24",
+    "summary": "Why the best AI systems keep humans in the decision loop — covering agent unpredictability, vibe coding vs agentic engineering, and why guardrails matter more than full autonomy.",
+    "file": "ideas/posts/human-in-the-loop-advantage.md",
+    "tags": [
+      "AI",
+      "Agentic AI",
+      "Human-in-the-Loop",
+      "Guardrails",
+      "AI Engineering"
+    ]
+  },
+  {
     "title": "Lean Purpose-Built AI Solutions Beat Bloated Platforms",
     "date": "2026-05-20",
     "summary": "Why the flood of AI tools in 2026 is making simplicity more valuable — and why designing good process fundamentals matters more than adding features.",
