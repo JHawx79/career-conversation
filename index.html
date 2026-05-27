@@ -355,6 +355,32 @@
       margin: 1.35rem 0;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
     }
+    .idea-content table.idea-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,.03);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .idea-content table.idea-table th {
+      text-align: left;
+      padding: 10px 14px;
+      color: var(--gold);
+      font-weight: 700;
+      border-bottom: 2px solid var(--line);
+      background: rgba(255,255,255,.05);
+    }
+    .idea-content table.idea-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+    }
+    .idea-content table.idea-table tr:last-child td { border-bottom: none; }
+    .idea-content table.idea-table a { color: var(--gold); text-decoration: underline; }
+    .idea-content table.idea-table a:hover { color: var(--wine); }
     .idea-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .idea-tag {
       padding: 6px 9px;
@@ -645,15 +671,46 @@
       let html = '';
       let inList = false;
       let inQuote = false;
+      let inTable = false;
 
       const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
       const closeQuote = () => { if (inQuote) { html += '</blockquote>'; inQuote = false; } };
+      const closeTable = () => { if (inTable) { html += '</table>'; inTable = false; } };
+
+      // Check if a line is a markdown table row
+      const isTableRow = (line) => /^\|.*\|$/.test(line.trim());
+      // Check if a line is a table separator (|---|---|)
+      const isTableSeparator = (line) => /^\|[\s\-:]+\|/.test(line.trim());
 
       lines.forEach((raw) => {
         const line = raw.trim();
-        if (!line) { closeList(); closeQuote(); return; }
+        if (!line) { closeList(); closeQuote(); closeTable(); return; }
 
-        if (line === '---' || line === '***' || line === '___') { closeList(); closeQuote(); html += '<hr>'; return; }
+        if (line === '---' || line === '***' || line === '___') { closeList(); closeQuote(); closeTable(); html += '<hr>'; return; }
+
+        // Handle table rows
+        if (isTableRow(line)) {
+          closeList(); closeQuote();
+          const cells = line.split('|').slice(1, -1).map(c => c.trim());
+
+          if (!inTable) {
+            html += '<table class="idea-table">';
+            html += '<thead><tr>';
+            cells.forEach(cell => { html += `<th>${inlineMarkdown(cell)}</th>`; });
+            html += '</tr></thead>';
+            html += '<tbody>';
+            inTable = true;
+          } else if (isTableSeparator(line)) {
+            // Skip separator row
+            return;
+          } else {
+            html += '<tr>';
+            cells.forEach(cell => { html += `<td>${inlineMarkdown(cell)}</td>`; });
+            html += '</tr>';
+          }
+          return;
+        }
+        closeTable();
 
         if (line.startsWith('> ')) {
           closeList();
@@ -676,6 +733,7 @@
       });
       closeList();
       closeQuote();
+      closeTable();
       return html;
     }
 
