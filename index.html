@@ -679,8 +679,8 @@
 
       // Check if a line is a markdown table row (allow leading/trailing whitespace)
       const isTableRow = (line) => /^\s*\|.*\|\s*$/.test(line);
-      // Check if a line is a table separator (|---|---|)
-      const isTableSeparator = (line) => /^\s*\|[\s\-:]+\|\s*$/.test(line);
+      // Check if a line is a table separator (every cell contains only whitespace, dashes, or colons)
+      const isTableSeparator = (line) => /^\s*\|(?:[\s\-:]*\|)+\s*$/.test(line);
 
       lines.forEach((raw) => {
         const line = raw.trim();
