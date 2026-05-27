@@ -686,9 +686,7 @@
         const line = raw.trim();
         if (!line) { closeList(); closeQuote(); closeTable(); return; }
 
-        if (line === '---' || line === '***' || line === '___') { closeList(); closeQuote(); closeTable(); html += '<hr>'; return; }
-
-        // Handle table rows
+        // Handle table rows FIRST (before hr check, since separator contains ---)
         if (isTableRow(line)) {
           closeList(); closeQuote();
           const cells = line.split('|').slice(1, -1).map(c => c.trim());
@@ -711,6 +709,8 @@
           return;
         }
         closeTable();
+
+        if (line === '---' || line === '***' || line === '___') { closeList(); closeQuote(); html += '<hr>'; return; }
 
         if (line.startsWith('> ')) {
           closeList();
