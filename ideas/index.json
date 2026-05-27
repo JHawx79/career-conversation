@@ -1,5 +1,19 @@
 [
   {
+    "title": "The Frontier Price War: Why Open Source Is Already the Smarter Play",
+    "date": "2026-05-27",
+    "summary": "How frontier model pricing converged at premium levels in 2025-2026, and why open-source models like Cursor's Composer 2.5 are delivering near-frontier performance at a fraction of the cost.",
+    "file": "ideas/posts/frontier-price-war-open-source.md",
+    "tags": [
+      "AI",
+      "Open Source",
+      "Frontier Models",
+      "Pricing",
+      "Cursor",
+      "Cost Efficiency"
+    ]
+  },
+  {
     "title": "The Human-in-the-Loop Advantage & Why I Don't Trust Fully Autonomous AI",
     "date": "2026-05-24",
     "summary": "Why the best AI systems keep humans in the decision loop — covering agent unpredictability, vibe coding vs agentic engineering, and why guardrails matter more than full autonomy.",
