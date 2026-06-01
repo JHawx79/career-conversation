@@ -2,7 +2,7 @@
 
 I recently added a custom AI chat to my website — not because I wanted to chase a trend, but because I wanted to solve a real problem: how do I give someone a window into my background, ideas, and approach without writing a wall of text?
 
-The answer was an AI career companion that lives right on jpartney.space. It connects to a Hugging Face Space running locally, pulls context from my Idea Garden posts, and answers questions about who I am, what I think about, and where I'm headed. I have to give credit to Ed Donner for the inspiration. The project I built evolved from one that he created in one of his AI courses on udemy. I built it out further and adapted it to my needs.
+The answer was an AI career companion that lives right on jpartney.space. It connects to a Hugging Face Space hosted on Hugging Face, pulls context from my Idea Garden posts, and answers questions about who I am, what I think about, and where I'm headed. I have to give credit to Ed Donner for the inspiration. The project I built evolved from one that he created in one of his AI courses on udemy. I built it out further and adapted it to my needs.
 
 ### Why this matters
 
