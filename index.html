@@ -198,7 +198,7 @@
     .section-head p { margin: 0; max-width: 780px; color: var(--muted); line-height: 1.7; }
 
     .chat-loader {
-      margin: 0 30px 30px;
+      margin: 0;
       min-height: 640px;
       border: 1px dashed rgba(255,255,255,.14);
       border-radius: 24px;
@@ -580,8 +580,8 @@
       .section-head { padding: 24px 18px 16px; }
       .section-head h2 { font-size: clamp(1.65rem, 9vw, 2.25rem); }
       .grid { grid-template-columns: 1fr; }
-      .chat-loader { margin: 0 14px 16px; min-height: 520px; }
-      .custom-chat { height: min(640px, 82vh); min-height: 520px; }
+      .chat-loader { margin: 0; min-height: 620px; }
+      .custom-chat { height: min(760px, 88vh); min-height: 620px; }
       .loader-panel { padding: 22px; }
       .chat-topbar { flex-direction: column; }
       .context-pill { text-align: left; }
@@ -637,12 +637,6 @@
 
     <section id="conversation" class="wrap">
       <div class="section-card reveal">
-        <div class="section-head">
-          <h2>Talk with my AI career companion</h2>
-          <p>
-            This custom chat is ready when the page loads. It connects to a Hugging Face Space, so the first response may take a moment if the Space is waking up.
-          </p>
-        </div>
         <div id="chatLoader" class="chat-loader" aria-live="polite"></div>
       </div>
     </section>
