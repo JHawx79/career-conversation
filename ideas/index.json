@@ -1,8 +1,20 @@
 [
   {
+    "title": "Good data is the quiet engine behind better business decisions",
+    "date": "2026-07-07",
+    "summary": "Most businesses sit on a mountain of data they can't actually use. The real bottleneck is not technology — it's structure. Clear, accessible data turns information into action.",
+    "file": "ideas/posts/good-data-quiet-engine-business-decisions.md",
+    "tags": [
+      "Data",
+      "Business",
+      "Decision Making",
+      "Leadership"
+    ]
+  },
+  {
     "title": "Trust-First AI: Intelligence Layer Guardrails",
     "date": "2026-06-08",
-    "summary": "Why trust architecture matters more than AI capability \u2014 how to structure access controls, data layers, and guardrails for your business intelligence layer before AI scales.",
+    "summary": "Why trust architecture matters more than AI capability — how to structure access controls, data layers, and guardrails for your business intelligence layer before AI scales.",
     "file": "ideas/posts/trust-first-ai-guardrails.md",
     "tags": [
       "AI",
@@ -15,9 +27,9 @@
     ]
   },
   {
-    "title": "AI Isn't Replacing Roles \u2014 It's Replacing Workflows",
+    "title": "AI Isn't Replacing Roles — It's Replacing Workflows",
     "date": "2026-06-02",
-    "summary": "Why businesses should stop asking 'Can AI replace my [job title]?' and start mapping workflows down to the atomic level \u2014 because AI is a force multiplier, not a foundation.",
+    "summary": "Why businesses should stop asking 'Can AI replace my [job title]?' and start mapping workflows down to the atomic level — because AI is a force multiplier, not a foundation.",
     "file": "ideas/posts/ai-workflows-not-roles.md",
     "tags": [
       "AI",
@@ -31,7 +43,7 @@
   {
     "title": "What I Built With AI: A Personal Career Companion on My Own Website",
     "date": "2026-05-31",
-    "summary": "How I added a custom AI chat to my website \u2014 and why building something specific to your own needs is the real advantage of AI in 2026.",
+    "summary": "How I added a custom AI chat to my website — and why building something specific to your own needs is the real advantage of AI in 2026.",
     "file": "ideas/posts/ai-career-companion-project.md",
     "tags": [
       "AI",
@@ -46,7 +58,7 @@
   {
     "title": "The \"Harness\" Problem: Why Cloud AI Integrations Are Your Weakest Link",
     "date": "2026-05-29",
-    "summary": "When the wrapper around cloud AI breaks, the model becomes useless in your workflow \u2014 why local stacks offer real reliability over SaaS integrations.",
+    "summary": "When the wrapper around cloud AI breaks, the model becomes useless in your workflow — why local stacks offer real reliability over SaaS integrations.",
     "file": "ideas/posts/harness-problem-cloud-ai.md",
     "tags": [
       "AI",
@@ -75,7 +87,7 @@
   {
     "title": "The Human-in-the-Loop Advantage & Why I Don't Trust Fully Autonomous AI",
     "date": "2026-05-24",
-    "summary": "Why the best AI systems keep humans in the decision loop \u2014 covering agent unpredictability, vibe coding vs agentic engineering, and why guardrails matter more than full autonomy.",
+    "summary": "Why the best AI systems keep humans in the decision loop — covering agent unpredictability, vibe coding vs agentic engineering, and why guardrails matter more than full autonomy.",
     "file": "ideas/posts/human-in-the-loop-advantage.md",
     "tags": [
       "AI",
@@ -88,7 +100,7 @@
   {
     "title": "Lean Purpose-Built AI Solutions Beat Bloated Platforms",
     "date": "2026-05-20",
-    "summary": "Why the flood of AI tools in 2026 is making simplicity more valuable \u2014 and why designing good process fundamentals matters more than adding features.",
+    "summary": "Why the flood of AI tools in 2026 is making simplicity more valuable — and why designing good process fundamentals matters more than adding features.",
     "file": "ideas/posts/2026-05-20_lean-purpose-built-ai-solutions.md",
     "tags": [
       "AI",
@@ -101,7 +113,7 @@
   {
     "title": "The Open Source Advantage: Why Control Beats Convenience",
     "date": "2026-05-19",
-    "summary": "Why I run my entire tech stack on open source \u2014 from file storage to AI development \u2014 and how control, privacy, and AI-assisted development are changing what is achievable for both hobbyists and businesses.",
+    "summary": "Why I run my entire tech stack on open source — from file storage to AI development — and how control, privacy, and AI-assisted development are changing what is achievable for both hobbyists and businesses.",
     "file": "ideas/posts/open-source-advantage.md",
     "tags": [
       "Open Source",
@@ -116,7 +128,7 @@
   {
     "title": "What Problem Are You Trying to Solve with AI?",
     "date": "2026-05-16",
-    "summary": "Dan Martell's GAIN Matrix framework for thinking about where AI actually fits in your business \u2014 and why solving real problems matters more than chasing tools.",
+    "summary": "Dan Martell's GAIN Matrix framework for thinking about where AI actually fits in your business — and why solving real problems matters more than chasing tools.",
     "file": "ideas/posts/what-problem-are-you-trying-to-solve-with-ai.md",
     "tags": [
       "AI",
@@ -129,7 +141,7 @@
   {
     "title": "Consumer or Creator? Where I Stand on AI Right Now",
     "date": "2026-05-14",
-    "summary": "From Microsoft Recall skeptic to local AI enthusiast \u2014 how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
+    "summary": "From Microsoft Recall skeptic to local AI enthusiast — how my journey from consumer to creator with AI changed everything, and why that shift matters more than you might think.",
     "file": "ideas/posts/2026-05-14_consumer-or-creator-ai-reflection.md",
     "tags": [
       "AI",
@@ -143,7 +155,7 @@
   {
     "title": "Dense vs Mixture-of-Experts: Why I Switched to a Dual-Model Setup",
     "date": "2026-05-14",
-    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent \u2014 and why open-source local models are getting production-ready.",
+    "summary": "How running a dense 27B model alongside a faster 35B MoE model on my Mac Studio solved context-completion issues in Hermes Agent — and why open-source local models are getting production-ready.",
     "file": "ideas/posts/2026-05-14_dense-vs-moe-dual-model-setup.md",
     "tags": [
       "AI",
