@@ -723,12 +723,15 @@
 
   <script>
     const GRADIO_CHAT_API = 'https://jhawx79-career-conversation.hf.space/gradio_api/call/chat_with_history';
-    const MAX_CONTEXT_CHARS = 4000;
-    const MAX_CONTEXT_IDEAS = 1;
-    const MIN_CONTEXT_SCORE = 2;
+    const MAX_CONTEXT_CHARS = 10000;
+    const MAX_CONTEXT_IDEAS = 3;
+    const MIN_CONTEXT_SCORE = 1;
+    const MIN_CONTEXT_CHARS = 1200;
+    const MAX_CONTEXT_CHARS_PER_IDEA = 6000;
+    const CONTEXT_WRAPPER_RESERVE_CHARS = 1000;
     const CONTEXT_STOP_WORDS = new Set([
-      'about', 'after', 'also', 'and', 'are', 'business', 'can', 'does', 'for', 'from', 'good',
-      'has', 'have', 'how', 'impact', 'into', 'its', 'that', 'the', 'this', 'terms', 'what',
+      'a', 'about', 'after', 'also', 'an', 'and', 'are', 'business', 'can', 'does', 'for', 'from', 'good',
+      'has', 'have', 'how', 'impact', 'into', 'is', 'its', 'me', 'please', 'tell', 'that', 'the', 'this', 'terms', 'what',
       'when', 'where', 'which', 'why', 'with', 'would', 'you', 'your'
     ]);
 
@@ -794,8 +797,23 @@
       event.currentTarget.form.requestSubmit();
     }
 
+    function normalizeQueryTerm(term) {
+      if (term.length > 4 && term.endsWith('ies')) return `${term.slice(0, -3)}y`;
+      if (term.length > 4 && term.endsWith('es')) return term.slice(0, -2);
+      if (term.length > 3 && term.endsWith('s')) return term.slice(0, -1);
+      return term;
+    }
+
     function tokenize(text) {
       return (text || '').toLowerCase().match(/[a-z0-9]+/g) || [];
+    }
+
+    function getMeaningfulQueryTerms(message) {
+      const rawTerms = tokenize(message)
+        .filter(term => term.length > 1 && !CONTEXT_STOP_WORDS.has(term));
+      const normalizedTerms = rawTerms.map(normalizeQueryTerm);
+      const hasSpecificTerms = normalizedTerms.some(term => term !== 'ai');
+      return new Set(normalizedTerms.filter(term => !(hasSpecificTerms && term === 'ai')));
     }
 
     function getIdeaContextId(idea) {
@@ -816,46 +834,78 @@
       });
     }
 
-    function getSessionReferenceContexts(selectedContext) {
+    function getSessionReferenceContexts(selectedContexts) {
       const contexts = Array.from(usedContextCache.values()).filter(context => context.context);
-      if (selectedContext?.id && selectedContext.context && !contexts.some(context => context.id === selectedContext.id)) {
-        contexts.push(selectedContext);
-      }
+      const selectedList = Array.isArray(selectedContexts) ? selectedContexts : (selectedContexts ? [selectedContexts] : []);
+      selectedList.forEach((context) => {
+        if (context?.id && context.context && !contexts.some(existing => existing.id === context.id)) {
+          contexts.push(context);
+        }
+      });
       return contexts.slice(0, MAX_CONTEXT_IDEAS);
     }
 
-    function buildIdeaContext(idea) {
-      const text = (idea.markdown || idea.summary || '').slice(0, MAX_CONTEXT_CHARS);
+    function buildIdeaContext(idea, budget = MAX_CONTEXT_CHARS_PER_IDEA) {
+      const text = (idea.markdown || idea.summary || '').slice(0, Math.max(0, budget));
       return `Title: ${idea.title}\nDate: ${idea.date || 'Undated'}\nSource: ${idea.file}\nTags: ${(idea.tags || []).join(', ')}\n\n${text}`;
     }
 
-    function selectIdeaContext(message) {
-      const queryTerms = new Set(tokenize(message).filter(term => term.length > 1 && !CONTEXT_STOP_WORDS.has(term)));
-      const scored = loadedIdeas.map((idea) => {
-        const strongHaystack = [idea.title, idea.summary, (idea.tags || []).join(' ')].join(' ').toLowerCase();
-        const fullHaystack = [strongHaystack, idea.markdown].join(' ').toLowerCase();
-        let score = 0;
-        queryTerms.forEach(term => {
-          if (strongHaystack.includes(term)) score += 2;
-          else if (fullHaystack.includes(term)) score += 1;
-        });
-        return { idea, score, id: getIdeaContextId(idea) };
-      }).filter(item => item.score >= MIN_CONTEXT_SCORE)
+    function scoreIdeaForQuery(idea, queryTerms) {
+      const title = (idea.title || '').toLowerCase();
+      const summary = (idea.summary || '').toLowerCase();
+      const tags = (idea.tags || []).join(' ').toLowerCase();
+      const body = (idea.markdown || '').toLowerCase();
+      let score = 0;
+      queryTerms.forEach(term => {
+        if (title.includes(term)) score += 5;
+        if (tags.includes(term)) score += 4;
+        if (summary.includes(term)) score += 3;
+        if (body.includes(term)) score += 1;
+      });
+      return score;
+    }
+
+    function allocateContextBudgets(scoredItems) {
+      const totalScore = scoredItems.reduce((sum, item) => sum + Math.max(item.score, 0), 0) || 1;
+      const usableContextChars = MAX_CONTEXT_CHARS - CONTEXT_WRAPPER_RESERVE_CHARS;
+      let remaining = usableContextChars;
+      return scoredItems.map((item, index) => {
+        const remainingItems = scoredItems.length - index;
+        const reserve = Math.max(0, remainingItems - 1) * MIN_CONTEXT_CHARS;
+        const weighted = Math.floor(usableContextChars * (item.score / totalScore));
+        const budget = Math.min(
+          MAX_CONTEXT_CHARS_PER_IDEA,
+          Math.max(MIN_CONTEXT_CHARS, weighted),
+          remaining - reserve
+        );
+        remaining -= budget;
+        return budget;
+      });
+    }
+
+    function selectIdeaContexts(message) {
+      const queryTerms = getMeaningfulQueryTerms(message);
+      const scored = loadedIdeas.map((idea) => ({
+        idea,
+        score: scoreIdeaForQuery(idea, queryTerms),
+        id: getIdeaContextId(idea),
+      })).filter(item => item.score >= MIN_CONTEXT_SCORE)
         .sort((a, b) => b.score - a.score)
         .slice(0, MAX_CONTEXT_IDEAS);
 
-      if (!scored.length) return null;
-      const { idea, score, id } = scored[0];
-      lastSelectedIdeaContext = {
+      if (!scored.length || scored[0].score <= 0) return [];
+      const budgets = allocateContextBudgets(scored);
+      const selected = scored.map(({ idea, score, id }, index) => ({
         id,
         title: idea.title,
         titles: [idea.title],
         file: idea.file,
         url: idea.url || idea.href || idea.file || '',
         score,
-        context: buildIdeaContext(idea).slice(0, MAX_CONTEXT_CHARS),
-      };
-      return lastSelectedIdeaContext;
+        context: buildIdeaContext(idea, budgets[index]),
+      }));
+      lastSelectedIdeaContext = selected[0] || null;
+      return selected;
     }
 
     function buildPayloadMessage(visibleMessage, contexts) {
@@ -900,17 +950,16 @@
       addChatMessage('user', visibleMessage);
       const pending = addChatMessage('assistant', 'Thinking…');
 
-      const selectedContext = selectIdeaContext(visibleMessage);
-      const selectedContextWasUsed = Boolean(selectedContext?.id && hasUsedContext(selectedContext.id));
-      const sessionReferenceContexts = selectedContext?.id && !selectedContextWasUsed ? [selectedContext] : [];
+      const selectedContexts = selectIdeaContexts(visibleMessage);
+      const sessionReferenceContexts = selectedContexts.filter(context => !hasUsedContext(context.id));
       const shouldInjectContext = Boolean(sessionReferenceContexts.length);
       const payloadMessage = buildPayloadMessage(visibleMessage, sessionReferenceContexts);
 
       if (isChatDebugMode) {
         console.debug('Chat context decision', {
-          selectedContextId: selectedContext?.id || null,
-          selectedContextTitle: selectedContext?.title || null,
-          selectedContextScore: selectedContext?.score || 0,
+          selectedContextIds: selectedContexts.map(context => context.id),
+          selectedContextTitles: selectedContexts.map(context => context.title),
+          selectedContextScores: selectedContexts.map(context => context.score),
           shouldInjectContext,
           usedContextIds: Array.from(usedContextCache.keys()),
           historyHasHiddenContext: chatHistory.some(turn => String(turn.content || '').includes('<context>')),
@@ -918,9 +967,10 @@
       }
 
       if (shouldInjectContext) {
-        pill.textContent = `Idea context: ${selectedContext.title}`;
-      } else if (selectedContext?.title && selectedContextWasUsed) {
-        pill.textContent = `Idea context: ${selectedContext.title} already in chat history`;
+        const contextTitles = sessionReferenceContexts.map(context => context.title).join(' + ');
+        pill.textContent = `Idea context: ${contextTitles}`;
+      } else if (selectedContexts.length) {
+        pill.textContent = 'Idea context: already in chat history';
       } else {
         pill.textContent = 'Idea context: none matched';
       }
@@ -930,9 +980,7 @@
         setAssistantMarkdownMessage(pending, reply);
         chatHistory.push({ role: 'user', content: payloadMessage });
         chatHistory.push({ role: 'assistant', content: reply });
-        if (selectedContext?.id && selectedContext.context && !selectedContextWasUsed) {
-          markContextUsed(selectedContext);
-        }
+        sessionReferenceContexts.forEach(context => markContextUsed(context));
       } catch (error) {
         pending.textContent = 'The chat backend is unavailable right now. Please try again in a moment.';
         console.error(error);
