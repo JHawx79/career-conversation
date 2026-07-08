@@ -476,6 +476,32 @@
       font-size: .78rem;
       font-weight: 800;
     }
+    .idea-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 16px 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .idea-pagination[hidden] { display: none; }
+    .idea-page-button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: var(--navy);
+      background: rgba(255,255,255,.055);
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .idea-page-button:hover:not(:disabled) {
+      border-color: rgba(216,144,47,.42);
+      background: rgba(216,144,47,.12);
+    }
+    .idea-page-button:disabled { opacity: .45; cursor: not-allowed; }
+    .idea-page-status { color: var(--muted); font-size: .9rem; font-weight: 800; }
     .idea-empty { padding: 26px; color: var(--muted); text-align: center; }
 
     .contact-layout {
@@ -656,6 +682,11 @@
           </div>
           <div id="ideaList" class="idea-list">
             <div class="idea-empty">Loading the latest ideas…</div>
+          </div>
+          <div id="ideaPagination" class="idea-pagination" hidden>
+            <button id="ideaPrev" class="idea-page-button" type="button">Previous</button>
+            <span id="ideaPageStatus" class="idea-page-status">Page 1 of 1</span>
+            <button id="ideaNext" class="idea-page-button" type="button">Next</button>
           </div>
         </div>
       </div>
@@ -914,6 +945,12 @@
 
     const ideaList = document.getElementById('ideaList');
     const ideaCount = document.getElementById('ideaCount');
+    const ideaPagination = document.getElementById('ideaPagination');
+    const ideaPrev = document.getElementById('ideaPrev');
+    const ideaNext = document.getElementById('ideaNext');
+    const ideaPageStatus = document.getElementById('ideaPageStatus');
+    const IDEAS_PER_PAGE = 6;
+    let currentIdeaPage = 1;
 
     function escapeHtml(value) {
       return value
@@ -1002,48 +1039,84 @@
       return html;
     }
 
+    function createIdeaItem(idea) {
+      const item = document.createElement('article');
+      item.className = 'idea-item';
+      // Ideas start collapsed so visitors can choose what to open.
+      const tags = (idea.tags || []).map(tag => `<span class="idea-tag">${escapeHtml(tag)}</span>`).join('');
+
+      item.innerHTML = `
+        <button class="idea-toggle" type="button" aria-expanded="false">
+          <span>
+            <h3 class="idea-title">${escapeHtml(idea.title)}</h3>
+            <span class="idea-meta">${escapeHtml(idea.date)} · ${escapeHtml(idea.summary)}</span>
+          </span>
+          <span class="idea-chevron">›</span>
+        </button>
+        <div class="idea-content">
+          ${renderMarkdown(idea.markdown)}
+          <div class="idea-tags">${tags}</div>
+        </div>
+      `;
+
+      const toggle = item.querySelector('.idea-toggle');
+      toggle.addEventListener('click', () => {
+        const isOpen = item.hasAttribute('open');
+        item.toggleAttribute('open', !isOpen);
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+      });
+      return item;
+    }
+
+    function updateIdeaPagination(totalPages) {
+      ideaPagination.hidden = totalPages <= 1;
+      ideaPrev.disabled = currentIdeaPage <= 1;
+      ideaNext.disabled = currentIdeaPage >= totalPages;
+      ideaPageStatus.textContent = `Page ${currentIdeaPage} of ${totalPages}`;
+    }
+
+    function renderIdeaPage() {
+      const totalPages = Math.max(1, Math.ceil(loadedIdeas.length / IDEAS_PER_PAGE));
+      currentIdeaPage = Math.min(Math.max(currentIdeaPage, 1), totalPages);
+      const start = (currentIdeaPage - 1) * IDEAS_PER_PAGE;
+      const visibleIdeas = loadedIdeas.slice(start, start + IDEAS_PER_PAGE);
+      ideaList.innerHTML = '';
+      visibleIdeas.forEach(idea => ideaList.appendChild(createIdeaItem(idea)));
+      if (!visibleIdeas.length) {
+        ideaList.innerHTML = '<div class="idea-empty">No ideas are published yet.</div>';
+      }
+      updateIdeaPagination(totalPages);
+      ideaList.scrollTop = 0;
+    }
+
+    ideaPrev.addEventListener('click', () => {
+      currentIdeaPage -= 1;
+      renderIdeaPage();
+    });
+
+    ideaNext.addEventListener('click', () => {
+      currentIdeaPage += 1;
+      renderIdeaPage();
+    });
+
     async function loadIdeas() {
       try {
         const response = await fetch('ideas/index.json', { cache: 'no-store' });
         if (!response.ok) throw new Error('Idea index not found');
         const ideas = await response.json();
         ideaCount.textContent = `${ideas.length} idea${ideas.length === 1 ? '' : 's'} published`;
-        ideaList.innerHTML = '';
+        loadedIdeas = [];
 
-        for (const [index, idea] of ideas.entries()) {
-          const item = document.createElement('article');
-          item.className = 'idea-item';
-          // Ideas start collapsed so visitors can choose what to open.
-
+        for (const idea of ideas) {
           const contentResponse = await fetch(idea.file, { cache: 'no-store' });
           const markdown = contentResponse.ok ? await contentResponse.text() : 'This idea could not be loaded.';
           loadedIdeas.push({ ...idea, markdown });
-          const tags = (idea.tags || []).map(tag => `<span class="idea-tag">${escapeHtml(tag)}</span>`).join('');
-
-          item.innerHTML = `
-            <button class="idea-toggle" type="button" aria-expanded="false">
-              <span>
-                <h3 class="idea-title">${escapeHtml(idea.title)}</h3>
-                <span class="idea-meta">${escapeHtml(idea.date)} · ${escapeHtml(idea.summary)}</span>
-              </span>
-              <span class="idea-chevron">›</span>
-            </button>
-            <div class="idea-content">
-              ${renderMarkdown(markdown)}
-              <div class="idea-tags">${tags}</div>
-            </div>
-          `;
-
-          const toggle = item.querySelector('.idea-toggle');
-          toggle.addEventListener('click', () => {
-            const isOpen = item.hasAttribute('open');
-            item.toggleAttribute('open', !isOpen);
-            toggle.setAttribute('aria-expanded', String(!isOpen));
-          });
-          ideaList.appendChild(item);
         }
+        currentIdeaPage = 1;
+        renderIdeaPage();
       } catch (error) {
         ideaCount.textContent = 'Ideas unavailable';
+        ideaPagination.hidden = true;
         ideaList.innerHTML = '<div class="idea-empty">Ideas are being prepared. Please check back soon.</div>';
       }
     }
