@@ -1,5 +1,18 @@
 [
   {
+    "title": "Before Judging AI, Judge the Infrastructure",
+    "date": "2026-07-19",
+    "summary": "Data centers are the physical face of AI — visible, tangible, and the thing people pin their uncertainty on. But behind the concrete and steel is real economic value, engineering innovation, and community benefits worth understanding before forming opinions.",
+    "file": "ideas/posts/data-centers-physical-reality-ai.md",
+    "tags": [
+      "AI",
+      "Data Centers",
+      "Infrastructure",
+      "Sustainability",
+      "Community Impact"
+    ]
+  },
+  {
     "title": "LTV to CAC: The One Ratio That Compresses Your Entire Business",
     "date": "2026-07-16",
     "summary": "The LTV:CAC ratio compresses everything a business does into one number. It's not flashy, but fundamentals like this are what actually drive results.",
