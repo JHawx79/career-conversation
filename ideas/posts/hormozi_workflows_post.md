@@ -1,4 +1,4 @@
-# Draft: Think in Workflows, Not Hierarchies
+# Think in Workflows, Not Hierarchies
 
 Today, most business decisions are made the way the Romans ran legions.
 
